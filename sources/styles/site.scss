@@ -1,0 +1,12 @@
+$bgcolor: #DDD;
+
+@font-face {
+  font-family: "BonVivant";
+  src: url("../fonts/BonVivant-Regular.woff2") format("woff2");
+}
+
+body {
+  background: $bgcolor url('../images/photo.jpeg');
+  transform: translateX(10px);
+  font-family: 'BonVivant', sans-serif;
+}
