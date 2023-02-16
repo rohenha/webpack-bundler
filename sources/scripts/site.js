@@ -1,7 +1,4 @@
 import { cube } from './math'
-// import youtube from '../sprites/youtube.svg'
-
-// console.log(youtube);
 let test = 'test'
 
 test += 'jean'

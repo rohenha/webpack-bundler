@@ -4,7 +4,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const CompressionPlugin = require("compression-webpack-plugin");
-const SpritePlugin = require('extract-svg-sprite-webpack-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
+const glob = require("glob")
 
 const dev = process.env.NODE_ENV === "dev"
 
@@ -13,11 +14,8 @@ let config = {
   entry: [
     './sources/scripts/site.js',
     './sources/styles/site.scss',
-    // './sources/sprites/youtube.svg',
+    ... glob.sync('./sources/sprites/*.svg')
   ],
-  // entry: {
-    // site: ['./sources/scripts/site.js', './sources/styles/site.scss']
-  // },
 	// Si on veux avoir un écouteur
   watch: dev,
   devtool: dev ? "eval-cheap-module-source-map" : false,
@@ -26,7 +24,7 @@ let config = {
   // Partie sortie du code
   output: {
     path: path.resolve('./views/assets'),
-    filename:  dev ? '[name].js' : '[name].[contenthash].js',
+    filename:  dev ? 'site.js' : 'site.[contenthash].js',
     clean: true,
     // assetModuleFilename: '[name].[contenthash][ext]'
   },
@@ -72,7 +70,7 @@ let config = {
         ]
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
         generator: {
           publicPath: './assets/images/',
@@ -90,29 +88,27 @@ let config = {
       {
         test: /\.svg$/,
         use: [
-          SpritePlugin.loader
+          { loader: 'svg-sprite-loader', options: {
+            extract: true,
+            spriteFilename: svgPath => `sprite.twig`,
+            outputPath: '/',
+            publicPath: '/'
+          } },
         ]
-      }, 
-      // {
-      //   test: /\.js$/,
-      //   exclude: /node_modules/,
-      //   use: [
-      //     'babel-loader'
-      //   ]
-      // }
+      },
     ]
   },
   plugins: [
     // To extract CSS from JS
     new MiniCssExtractPlugin({
-      filename: dev ? '[name].css' : '[name].[contenthash].css'
+      filename: dev ? 'site.css' : 'site.[contenthash].css'
     }),
     // To create manifest file
     new WebpackManifestPlugin({}),
     // Create Sprites
-    new SpritePlugin({
-      // filename: 'views/sprite.svg',
-      symbolId: 'icon-'
+    new SpriteLoaderPlugin({
+      plainSprite: true,
+      spriteAttrs: {}
     })
   ],
 }
