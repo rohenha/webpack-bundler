@@ -1,4 +1,8 @@
 views/assets
+views/critical.twig
+views/sprite.twig
+views/sprite.twig.gz
+
 .tmp
 node_modules
 

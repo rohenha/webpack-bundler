@@ -5,6 +5,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const CompressionPlugin = require("compression-webpack-plugin");
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const glob = require("glob")
 
 const dev = process.env.NODE_ENV === "dev"
@@ -64,9 +65,9 @@ let config = {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          // SpritePlugin.cssLoader,
           'postcss-loader',
-          'sass-loader'
+          'sass-loader',
+          'webpack-import-glob-loader',
         ]
       },
       {
@@ -87,13 +88,17 @@ let config = {
       },
       {
         test: /\.svg$/,
+        include: path.resolve(__dirname, './sources/sprites'),
         use: [
-          { loader: 'svg-sprite-loader', options: {
-            extract: true,
-            spriteFilename: svgPath => `sprite.twig`,
-            outputPath: '/',
-            publicPath: '/'
-          } },
+          { 
+            loader: 'svg-sprite-loader', 
+            options: {
+              extract: true,
+              spriteFilename: svgPath => `sprite.twig`,
+              outputPath: '../',
+              publicPath: '/'
+            }
+          },
         ]
       },
     ]
@@ -109,6 +114,14 @@ let config = {
     new SpriteLoaderPlugin({
       plainSprite: true,
       spriteAttrs: {}
+    }),
+    new BrowserSyncPlugin({
+      // browse to http://localhost:3000/ during development,
+      // ./public directory is being served
+      host: 'localhost',
+      port: 3000,
+      // server: { baseDir: ['views'] },
+      proxy: 'http://graphikart-webpack.vm/'
     })
   ],
 }
@@ -118,7 +131,9 @@ if (!dev) {
     usedExports: true,
     minimize: true,
     minimizer: [
+      // Plugin pour minimiser le CSS
       new TerserPlugin(),
+      // Plugin pour minimiser le CSS
       new CssMinimizerPlugin({
         minify: CssMinimizerPlugin.cssoMinify,
         minimizerOptions: {

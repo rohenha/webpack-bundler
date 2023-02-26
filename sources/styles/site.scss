@@ -1,3 +1,5 @@
+@import './atoms/*';
+
 $bgcolor: #DDD;
 
 @font-face {
@@ -9,4 +11,16 @@ body {
   background: $bgcolor url('../images/photo.jpeg');
   transform: translateX(10px);
   font-family: 'BonVivant', sans-serif;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1rem;
+    background-color: red;
+  }
+
+  &.-border {
+    display: none;
+  }
 }

@@ -12,7 +12,10 @@
   "license": "ISC",
   "browserslist": "> 0.25%, not dead",
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^5.0.0",
     "autoprefixer": "^10.4.13",
+    "browser-sync": "^2.27.12",
+    "browser-sync-webpack-plugin": "^2.3.0",
     "compression-webpack-plugin": "^10.0.0",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
@@ -20,6 +23,8 @@
     "glob": "^8.1.0",
     "mini-css-extract-plugin": "^2.7.2",
     "postcss": "^8.4.21",
+    "postcss-critical-css": "^3.0.7",
+    "postcss-inline-svg": "^6.0.0",
     "postcss-loader": "^7.0.2",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
@@ -27,7 +32,10 @@
     "terser-webpack-plugin": "^5.3.6",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
+    "webpack-import-glob-loader": "^1.6.3",
     "webpack-manifest-plugin": "^5.0.0",
     "webpack-nano": "^1.1.1"
+  },
+  "dependencies": {
   }
 }
