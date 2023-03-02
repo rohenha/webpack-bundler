@@ -6,6 +6,7 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const CompressionPlugin = require("compression-webpack-plugin");
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+const CopyPlugin = require("copy-webpack-plugin");
 const glob = require("glob")
 
 const dev = process.env.NODE_ENV === "dev"
@@ -101,6 +102,15 @@ let config = {
           },
         ]
       },
+      {
+        test: /\.(glsl|vs|fs)$/,
+        loader: 'shader-loader',
+        options: {
+          // glsl: {
+          //   chunkPath: resolve("/glsl/chunks")
+          // }
+        }
+      }
     ]
   },
   plugins: [
@@ -122,7 +132,13 @@ let config = {
       port: 3000,
       // server: { baseDir: ['views'] },
       proxy: 'http://graphikart-webpack.vm/'
-    })
+    }),
+    // copy files
+    new CopyPlugin({
+      patterns: [
+        { from: "sources/assets", to: "./" },
+      ],
+    }),
   ],
 }
 

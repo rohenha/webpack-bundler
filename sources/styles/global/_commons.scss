@@ -1,0 +1,41 @@
+html {
+  color: clr(primary);
+  font-weight: normal;
+  font-size: $fsize;
+  font-family: $font-regular;
+  line-height: 1;
+  cursor: default;
+  user-select: none;
+  scroll-behavior: initial;
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
+  /* stylelint-disable-next-line property-no-unknown */
+  font-smoothing: antialiased;
+  text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &.is-loading,
+  &.is-loading * {
+    cursor: progress;
+    pointer-events: none;
+  }
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricprecision;
+  font-feature-settings: "liga" off;
+}
+
+hr {
+  margin: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: clr('black');
+  border-top: 0;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.dg.ac {
+  z-index: 5 !important;
+}

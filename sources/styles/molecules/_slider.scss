@@ -1,0 +1,17 @@
+.m-slider {
+  --size: 1;
+  --space: 1rem;
+
+  overflow: hidden;
+
+  &__container {
+    display: flex;
+  }
+
+  &__item {
+    position: relative;
+    flex: 0 0 calc(100% / var(--size));
+    padding-right: calc(var(--space) / 2);
+    padding-left: calc(var(--space) / 2);
+  }
+}

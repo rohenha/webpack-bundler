@@ -1,0 +1,8 @@
+.o-blocks {
+  display: grid;
+  gap: var(--vr);
+
+  @media #{$lg} {
+    gap: calc(var(--vr) * 2);
+  }
+}
